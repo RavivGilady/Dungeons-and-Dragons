@@ -28,6 +28,10 @@ public class Mage extends Player {
         }
         return b;
     }
+    @Override
+    public void gameTick() {
+
+    }
 
     public boolean specialAbility (List<Enemy> enemyList){
         if (currentMana<cost)

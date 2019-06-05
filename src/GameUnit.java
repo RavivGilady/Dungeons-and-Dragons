@@ -22,14 +22,24 @@ public abstract class GameUnit {
         this.tile=Tile;
         this.position=new Point(Xposition,Yposition);
     }
-    public void attact(GameUnit gu)
+    public int[] attack(GameUnit gu)
     {
-        gu.defense(Attack);
+        //TODO random
+        int[] combatInfo=new int[2];
+        combatInfo[0]=0; //TODO change
+        combatInfo[1]=gu.defense(Attack);
+        return combatInfo;
     }
-    public void defense(int attactPoints)
+    public int defense(int attactPoints)
+    {//TODO change to random defense Point
+        return 0;
+    }
+    public  boolean isDead()
     {
+        return (CurrentHealth<=HealthPool);
+    }
 
-    }
+    public abstract void gameTick();
     public String getName() {
         return name;
     }
@@ -86,9 +96,14 @@ public abstract class GameUnit {
         return tile;
     }
 
+    public void setTile(char tile) {
+        this.tile = tile;
+    }
+
     public Point getPosition() {return position;}
 
     public void setPosition(Point position){this.position=position;}
+
 }
 
 

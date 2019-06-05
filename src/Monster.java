@@ -7,4 +7,9 @@ public class Monster extends Enemy{
         this.range = range;
 
     }
+
+    @Override
+    public void gameTick() {
+
+    }
 }

@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Tests {
     static Level first;
@@ -19,7 +20,9 @@ public class Tests {
 
     private static void printBoard()
     {
+        Scanner sc=new Scanner(System.in);
         System.out.println(first.printBoard());
+
         first.playerMove(0,'s');
         first.playerMove(0,'s');
         first.playerMove(0,'s');

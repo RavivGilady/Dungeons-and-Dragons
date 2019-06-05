@@ -40,4 +40,13 @@ public class Point {
     public void moveDown(){
         y=y+1;
     }
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof Point))
+            return false;
+        Point p=(Point)o;
+        return (this.x==p.x && this.y==p.y);
+
+    }
+
 }

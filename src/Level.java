@@ -6,6 +6,7 @@ public class Level {
     private List<Point> walls;
     private int width;
     private int length;
+    private String combatNotification ="";
 
     public Level(List<Enemy> enemiesList, List<Player> playerList, List<Point> walls, int width, int length) {
         this.enemiesList = enemiesList;
@@ -16,6 +17,12 @@ public class Level {
     }
     public void gameTick()
     {
+        for (Player pl : playerList) {
+            if(!pl.isDead())
+                pl.gameTick();
+        }
+        for(Enemy en: enemiesList)
+            en.gameTick();
 
     }
 
@@ -35,41 +42,11 @@ public class Level {
         if (movement=='e')
             desiredPlayer.specialAbility(enemiesList);
         //TODO check if there's anything to do with boolean return value
-        if(checkWalls(playerMovementPoint))
+        if(checkWalls(playerMovementPoint) && checkForEnemiesAndAttack(playerPosition,playerMovementPoint))
             desiredPlayer.setPosition(playerMovementPoint);
-        checkForEnemies(playerPosition);
-    }
-    public void moveLeft(int playerPosition)
-    {
-        Player desiredPlayer=playerList.get(playerPosition);
-        Point playerMovementPoint=new Point(desiredPlayer.getPosition());
-        playerMovementPoint.moveLeft();
-
-        if(checkWalls(playerMovementPoint))
-            desiredPlayer.setPosition(playerMovementPoint);
-        checkForEnemies(playerPosition);
+        //checkForEnemiesAndAttack(playerPosition); TODO change it to stay in place and attack
     }
 
-    public void moveUp(int playerPosition)
-    {
-        Player desiredPlayer=playerList.get(playerPosition);
-        Point playerMovementPoint=new Point(desiredPlayer.getPosition());
-        playerMovementPoint.moveRight();
-
-        if(checkWalls(playerMovementPoint))
-            desiredPlayer.setPosition(playerMovementPoint);
-        checkForEnemies(playerPosition);
-    }
-    public void moveDown(int playerPosition)
-    {
-        Player desiredPlayer=playerList.get(playerPosition);
-        Point playerMovementPoint=new Point(desiredPlayer.getPosition());
-        playerMovementPoint.moveRight();
-
-        if(checkWalls(playerMovementPoint))
-            desiredPlayer.setPosition(playerMovementPoint);
-        checkForEnemies(playerPosition);
-    }
     public boolean checkWalls(Point playerMovementPoint)
     {
         boolean canMove=true;
@@ -79,14 +56,31 @@ public class Level {
         }
         return canMove;
     }
-    private void checkForEnemies(int playerPosition) {
+    private boolean checkForEnemiesAndAttack(int playerPosition,Point position) {
         Player desiredPlayer=playerList.get(playerPosition);
-        Point playerMovementPoint=new Point(desiredPlayer.getPosition());
+        Point playerMovementPoint=position;
         for (Enemy en : enemiesList)
-            if(playerMovementPoint.equals(en.getPosition()))
-                desiredPlayer.attact(en);
+            if(playerMovementPoint.equals(en.getPosition())) {
+                attackEnemy(desiredPlayer,en);
+                return false;
+            }
+        return true;
     }
 
+    public void attackEnemy(Player attacker,Enemy defender)
+    {
+        int[] combatStats =attacker.attack(defender);
+        this.combatNotification +="Player "+attacker.getName() +" attacked "+defender.getName() + " and made "+ combatStats[0] +" attack" +
+                "point, and " + defender.getName()+ "had " +combatStats[1] +" defense point.\n";
+        if (defender.isDead()) {
+            combatNotification +=defender.getName()+" is now dead! \n";
+            attacker.addExp(defender.getExperience()); // add the experience that the player should get from this enemy
+            enemiesList.remove(defender);
+        }
+        else
+            combatNotification +=defender.getName()+" has "+ defender.getCurrentHealth() +" health point remaining.\n";
+
+    }
     public String printBoard() {
         char[][] boardAsArray = new char[length][width];
         for (int i = 0; i < length; i++)
@@ -114,5 +108,24 @@ public class Level {
             newBoard+= "\n";
         }
         return newBoard;
+    }
+    public String printMessages() {
+        String output = combatNotification;
+        combatNotification ="";
+        for (Player p : playerList) {
+            if (p.isDead())
+                output += "Player " + p.getName() + " died in the last game round! his level was - "+p.getLevel()+
+                        " and his EXP was: " +p.getExperience()+ "\n";
+            else if (p.levelUp()) {
+                output += "Player " + p.getName() + " leveled up to level - " + p.getLevel() + "\n";
+            }
+        }
+        return output;
+    }
+    public String playerStats(Player p)
+    {
+        String output="Stats of Player: "+p.getName()+"\n";
+        output+= "Health pool= "+p.getHealthPool();
+        return output;
     }
 }

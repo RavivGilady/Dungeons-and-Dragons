@@ -39,18 +39,30 @@ public class Warrior extends Player {
 
         return b;
     }
+    @Override
+    public void gameTick() {
+    remaining--;
+    }
 
     public boolean specialAbility (List<Enemy> enemyList){
         if (remaining>0)
-            return false;
+            return false; //TODO - throw an error with a message??
         else{
-            remaining = getCooldown();
-            if(this.getHealthPool()-2*this.getDefense()>=(this.getCurrentHealth()+ 2*this.getDefense()))
+            remaining = cooldown;
+            if(this.getHealthPool()>=(this.getCurrentHealth()+ 2*this.getDefense()))
+                this.setCurrentHealth(getHealthPool());
+            else
                 this.setCurrentHealth(this.getCurrentHealth() + 2*this.getDefense());
         }
         return true;
     }
 
+    public String toString()
+    {
+        String warrior=super.toString();
+        warrior+="Cooldwown"; //TODO finish and add in other Player Subclasses
+        return warrior;
+    }
 
 
 

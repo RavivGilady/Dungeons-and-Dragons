@@ -2,6 +2,7 @@ import java.util.List;
 
 public class Rogue extends Player {
 
+
     private int cost;
     private int currentEnergy;
 
@@ -18,6 +19,10 @@ public class Rogue extends Player {
             this.setAttack(this.getAttack()+3*this.getLevel());
         }
         return b;
+    }
+    @Override
+    public void gameTick() {
+
     }
 
     public boolean specialAbility (List<Enemy> enemyList){

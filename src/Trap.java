@@ -23,4 +23,9 @@ public class Trap extends Enemy {
     public int getVisibility() {
         return visibility;
     }
+
+    @Override
+    public void gameTick() {
+
+    }
 }
