@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Monster extends Enemy{
 
     private int range;
@@ -9,13 +11,28 @@ public class Monster extends Enemy{
     }
 
     @Override
-    public Point move() {
-       return this.getPosition();
+    public Point move(Point player) {
+        Point output = new Point(getPosition());
+        if (getPosition().distance(player)<range)        {
+            output.moveTowards(player);
+        }
+        else {
+            int movementValue = randomGenerator.generateNumber(500);
+            if (movementValue %5 == 0)
+                output.moveLeft();
+            if (movementValue % 5 == 1)
+                output.moveUp();
+            if (movementValue % 5 == 2)
+                output.moveRight();
+            if (movementValue % 5 == 3)
+                output.moveDown();
+            //if %5==4 do nothing - output=output
+        }
+        return output;
     }
 
     @Override
     public void gameTick() {
-        //TODO implement
 
     }
 }

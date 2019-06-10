@@ -54,12 +54,13 @@ public class Mage extends Player {
     }
 
     private String selectRandomAndAttack(List<Enemy> enemiesInRange) {
-        int randomEnemy=0;                      //TODO random number
+        int randomEnemy=randomGenerator.generateNumber(enemiesInRange.size());
         Enemy en= enemiesInRange.get(randomEnemy);
         int[] combatStats = attack(en, spellPower);
         if( combatStats[0]>combatStats[1])
         {
-            String output=this.getName()+" attacked " + en.getName() +" via special ability and made him "+combatStats[0] + "damage" ;
+            String output=this.getName()+" attacked " + en.getName() +" via special ability and made him "
+                    +(combatStats[0]-combatStats[1]) + "damage" ;
             if (en.isDead()) {
                 enemiesInRange.remove(en);
                 output+=" and killed him!";

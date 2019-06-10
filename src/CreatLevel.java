@@ -23,11 +23,11 @@ public class CreatLevel {
         return sc;
     }
 
-    public LinkedList[] creatEnemyList() {
+    public List<Enemy>[] creatEnemyList() {
 
         LinkedList[] enemyList = new LinkedList[2];
         enemyList[0]= new LinkedList<Monster>();
-        enemyList[0]= new LinkedList<Trap>();
+        enemyList[1]= new LinkedList<Trap>();
 
         Scanner sc = restartScanner();
         int counter = 0;
@@ -109,7 +109,7 @@ public class CreatLevel {
         }
         return wallsList;
     }
-    public int width () {
+    public int length () {
         Scanner sc = restartScanner();
         int counter = 0;
         while (sc.hasNextLine()) {
@@ -118,14 +118,12 @@ public class CreatLevel {
         }
         return counter;
     }
-    public int length () {
+    public int width () {
         Scanner sc = restartScanner();
-        int counter = 0;
-        while (sc.hasNextLine()&counter==0) {
-            String line = sc.nextLine();
-            counter = line.length();
-        }
-        return counter;
+        String line = sc.nextLine();
+        return line.length();
+
     }
+
 }
 

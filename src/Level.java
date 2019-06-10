@@ -16,6 +16,8 @@ public class Level {
         this.length = length;
     }
     public void gameTick(){
+        for(Enemy trap: enemiesLists[1])
+            checkForPlayersAndAttack(trap.getPosition(),trap,((Trap)trap).getRange());
         for (Player pl : playerList) {
             if(!pl.isDead())
                 pl.gameTick();
@@ -64,12 +66,12 @@ public class Level {
         for(List<Enemy> enemies : enemiesLists)
             for (Enemy en : enemies)
                 if(playerMovementPoint.equals(en.getPosition())) {
-                    attackGameUnit(desiredPlayer,en);
+                    attackEnemy(desiredPlayer,en);
                     return false;
             }
         return true;
     }
-    public void attackGameUnit(Player attacker,Enemy defender){
+    public void attackEnemy(Player attacker, Enemy defender){
         int[] combatStats =attacker.attack(defender);
         if( combatStats[0]>combatStats[1])
         {
@@ -107,6 +109,10 @@ public class Level {
         for(Player pl : playerList)
         {
             boardAsArray[pl.getYposition()][pl.getXposition()]=pl.getTile();
+        }
+        for(Point p : walls)
+        {
+            boardAsArray[p.getY()][p.getX()]='#';
         }
         return arrayToBoard(boardAsArray);
 
@@ -146,15 +152,16 @@ public class Level {
     }
     public void enemiesMove()
     {
-        monsterMove();
-        trapsMove();
+        Point player1=playerList.get(0).getPosition();
+        monsterMove(player1);
+        trapsMove(player1);
     }
 
-    private void monsterMove() {
+    private void monsterMove(Point player1) {
 
         for(Enemy mon :enemiesLists[0])
         {
-            Point desiredMovement =mon.move(); //TODO implement
+            Point desiredMovement =mon.move(player1);
             if(checkWalls(desiredMovement))
                 if(checkForPlayersAndAttack(desiredMovement,mon,0))
                     mon.setPosition(desiredMovement);
@@ -175,7 +182,8 @@ public class Level {
         int[] combatStats =attacker.attack(defender);
         if( combatStats[0]>combatStats[1])
         {
-            combatNotification+=attacker.getName()+" attacked " + defender.getName() +" and made him "+combatStats[0] + "damage! ";
+            combatNotification+=attacker.getName()+" attacked " + defender.getName() +" and made him "
+                    +(combatStats[0]-combatStats[1]) + "damage! ";
             if (defender.isDead())
             {
                 combatNotification+=" And killed him! ";
@@ -189,12 +197,30 @@ public class Level {
                     " but couldn't hurt him because " + defender.getName() +"had " +combatStats[1] + " defence points! \n";
     }
 
-    private void trapsMove() {
+    private void trapsMove(Point player1) {
+        for(Enemy trap : enemiesLists[1])        {
+            Point desiredMovement=trap.move(player1);
+            if (desiredMovement!=null) { // if null , trap doesn't move
+                while (!isAvailable(desiredMovement))
+                    desiredMovement = trap.move(player1);
+                trap.setPosition(desiredMovement);
+            }
+        }
     }
 
-
-    public int numOfEnemies()
-    {
-        return (enemiesLists[0].size() +enemiesLists[1].size());
+    private boolean isAvailable(Point move) {
+        if(move.outOfBounds(length,width))
+            return false;
+        for(Player p :playerList) {
+            if (p.getPosition().equals(move))
+                return false;
+        }
+        for (List<Enemy> enemies : enemiesLists){
+            for (Enemy en :enemies)
+                if (en.getPosition().equals(move))
+                    return false;
+        }
+        return true;
     }
+
 }

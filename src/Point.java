@@ -58,4 +58,26 @@ public class Point {
     }
 
 
+    public boolean outOfBounds(int length, int width) {
+        if (y>=length | x>=width)
+            return true;
+        return false;
+    }
+
+    public void moveTowards(Point player) {
+        int dx=x-player.x;
+        int dy=y-player.y;
+        if(Math.abs(dx)>Math.abs(dy)){
+            if(dx>0)
+                moveLeft();
+            else
+                moveRight();
+        }
+        else {
+            if (dy > 0)
+                moveUp();
+            else
+                moveDown();
+        }
+    }
 }

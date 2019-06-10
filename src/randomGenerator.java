@@ -1,19 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Random;
-import java.util.List;
+
 public class randomGenerator {
     private static boolean deter;
     private static Scanner number;
     private static Scanner action;
-    private static Random generaor;
+    private static Random generator=new Random();
 
-    public randomGenerator (){
-        deter = false;
-        generaor = new Random();
-    }
 
     public randomGenerator (String numbers, String actions){
         File numberFile = new File(numbers);
@@ -40,11 +35,12 @@ public class randomGenerator {
                     return random;
             }
         }
-        random = generaor.nextInt(value);
+
+        random = generator.nextInt(value);
         return random;
     }
 
-    public String generateAction (){
+    public static String generateAction (){
         if(deter){
             if(action.hasNext())
                return action.nextLine();

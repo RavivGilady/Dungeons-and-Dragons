@@ -40,7 +40,8 @@ public class Rogue extends Player {
                 int[] combatStats = attack(en, getAttack());
                 if( combatStats[0]>combatStats[1])
                 {
-                    output+=this.getName()+" attacked " + en.getName() +" via special ability and made him "+combatStats[0] + "damage!" ;
+                    output+=this.getName()+" attacked " + en.getName() +" via special ability and made him "
+                            +(combatStats[0]-combatStats[1]) + "damage!" ;
                     if (en.isDead())
                     {
                         output+=" And killed him! ";
