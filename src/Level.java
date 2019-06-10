@@ -30,7 +30,6 @@ public class Level {
     {
         Player desiredPlayer=playerList.get(playerPosition);
         Point playerMovementPoint=new Point(desiredPlayer.getPosition());
-
         if (movement=='w')
             playerMovementPoint.moveUp();
         if (movement=='s')
@@ -39,12 +38,13 @@ public class Level {
             playerMovementPoint.moveLeft();
         if (movement=='d')
             playerMovementPoint.moveRight();
-        if (movement=='e')
-            desiredPlayer.specialAbility(enemiesList);
-        //TODO check if there's anything to do with boolean return value
-        if(checkWalls(playerMovementPoint) && checkForEnemiesAndAttack(playerPosition,playerMovementPoint))
-            desiredPlayer.setPosition(playerMovementPoint);
-        //checkForEnemiesAndAttack(playerPosition); TODO change it to stay in place and attack
+        if (movement=='e') {
+                combatNotification+=desiredPlayer.specialAbility(enemiesList);
+
+        }
+        if(checkWalls(playerMovementPoint))
+            if(checkForEnemiesAndAttack(playerPosition,playerMovementPoint))
+                desiredPlayer.setPosition(playerMovementPoint);
     }
 
     public boolean checkWalls(Point playerMovementPoint)
@@ -70,16 +70,22 @@ public class Level {
     public void attackEnemy(Player attacker,Enemy defender)
     {
         int[] combatStats =attacker.attack(defender);
-        this.combatNotification +="Player "+attacker.getName() +" attacked "+defender.getName() + " and made "+ combatStats[0] +" attack" +
-                "point, and " + defender.getName()+ "had " +combatStats[1] +" defense point.\n";
-        if (defender.isDead()) {
-            combatNotification +=defender.getName()+" is now dead! \n";
-            attacker.addExp(defender.getExperience()); // add the experience that the player should get from this enemy
-            enemiesList.remove(defender);
+        if( combatStats[0]>combatStats[1])
+        {
+            combatNotification+=attacker.getName()+" attacked " + defender.getName() +" and made him "+combatStats[0] + "damage! ";
+            if (defender.isDead())
+            {
+                combatNotification+=" And killed him! ";
+                attacker.addExp(defender.getExperience()); // add the experience that the player should get from this enemy
+                enemiesList.remove(defender);
+            }
+            else
+                combatNotification+=defender.getName() +" has " + defender.getCurrentHealth() +" health points remaining";
+            combatNotification+="\n";
         }
         else
-            combatNotification +=defender.getName()+" has "+ defender.getCurrentHealth() +" health point remaining.\n";
-
+            combatNotification+=attacker.getName()+" tried to attack " + defender.getName() +"  and make "+combatStats[0]+"attack points," +
+                    " but couldn't hurt him because " + defender.getName() +"had " +combatStats[1] + " defence points! \n";
     }
     public String printBoard() {
         char[][] boardAsArray = new char[length][width];
@@ -116,16 +122,22 @@ public class Level {
             if (p.isDead())
                 output += "Player " + p.getName() + " died in the last game round! his level was - "+p.getLevel()+
                         " and his EXP was: " +p.getExperience()+ "\n";
-            else if (p.levelUp()) {
-                output += "Player " + p.getName() + " leveled up to level - " + p.getLevel() + "\n";
+            else
+            {
+                while(p.levelUp()) {
+                    output += "Player " + p.getName() + " leveled up to level - " + p.getLevel() + "\n";
+                }
+                output +=playerStats(p);
             }
         }
         return output;
     }
     public String playerStats(Player p)
     {
-        String output="Stats of Player: "+p.getName()+"\n";
-        output+= "Health pool= "+p.getHealthPool();
-        return output;
+        return p.toString();
+    }
+    public void emptyNotification()
+    {
+        combatNotification="";
     }
 }

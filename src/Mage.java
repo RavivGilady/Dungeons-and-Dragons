@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class Mage extends Player {
@@ -30,17 +31,64 @@ public class Mage extends Player {
     }
     @Override
     public void gameTick() {
+        currentMana=Math.min(manaPool,currentMana+1);
+    }
+
+    public String  specialAbility (List<Enemy> enemyList) {
+        String output="";
+        if (currentMana<cost)
+            output = "Cannot cast ability, current mana is smaller than cost";
+
+        else {
+            currentMana = currentMana - cost;
+            List<Enemy> enemiesInRange = enemiesInRange(range, enemyList);
+            int hits = 0;
+            while (!enemiesInRange.isEmpty() & hits < hitTimes)
+            {
+                output+=selectRandomAndAttack(enemiesInRange);
+                hits++;
+            }
+        }
+        return output;
 
     }
 
-    public boolean specialAbility (List<Enemy> enemyList){
-        if (currentMana<cost)
-            return false;
-        else{
-            currentMana = currentMana -cost;
-            int hit =0;
-            //while loop must be completed
+    private String selectRandomAndAttack(List<Enemy> enemiesInRange) {
+        int randomEnemy=0;                      //TODO random number
+        Enemy en= enemiesInRange.get(randomEnemy);
+        int[] combatStats = attack(en, spellPower);
+        if( combatStats[0]>combatStats[1])
+        {
+            String output=this.getName()+" attacked " + en.getName() +" via special ability and made him "+combatStats[0] + "damage" ;
+            if (en.isDead()) {
+                enemiesInRange.remove(en);
+                output+=" and killed him!";
+            }
+            else
+                output+=en.getName() +" has " + en.getCurrentHealth() +" health points remaining";
+            output+="\n";
+            return  output;
         }
-        return true;
+        else
+            return (this.getName()+" tried to attack " + en.getName() +" via special ability and make "+combatStats[0]+"," +
+                    " but couldn't hurt him because " + en.getName() +"had " +combatStats[1] + " defence points! \n") ;
+    }
+
+    public String toString()
+    {
+        String mage=super.toString();
+        mage+="Type: Mage, Spell Power: "+spellPower +"     mana pool: "+manaPool + "    cost of special ability: "  + cost + "\n"+
+            "     hit times: " + hitTimes+ "    range: " +range + "\n";
+        return mage;
+    }
+    private List<Enemy> enemiesInRange(int range,List<Enemy> enemies)
+    {
+        List<Enemy> enemiesInRange=new LinkedList<Enemy>();
+        Point playerPosition=this.getPosition();
+        for (Enemy en: enemies) {
+            if ((en.getPosition().distance(playerPosition))<range)
+                enemiesInRange.add(en);
+        }
+        return enemiesInRange;
     }
 }

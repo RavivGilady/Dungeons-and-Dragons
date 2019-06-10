@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class Rogue extends Player {
@@ -22,16 +23,58 @@ public class Rogue extends Player {
     }
     @Override
     public void gameTick() {
+        if (currentEnergy+10>100)
+            currentEnergy=100;
+        else
+            currentEnergy+=10;
+    }
+
+    public String specialAbility (List<Enemy> enemyList){
+        String output="";
+        if (currentEnergy<cost)
+            output= "Cannot cast ability, current energy is smaller than cost";
+        else{
+            currentEnergy = currentEnergy -cost;
+            List<Enemy> enemiesInRange=enemiesInRange(2,enemyList);
+            for (Enemy en : enemiesInRange) {
+                int[] combatStats = attack(en, getAttack());
+                if( combatStats[0]>combatStats[1])
+                {
+                    output+=this.getName()+" attacked " + en.getName() +" via special ability and made him "+combatStats[0] + "damage!" ;
+                    if (en.isDead())
+                    {
+                        output+=" And killed him! ";
+                    }
+                    else
+                        output+=en.getName() +" has " + en.getCurrentHealth() +" health points remaining";
+                    output+="\n";
+                }
+                else
+                    output+=this.getName()+" tried to attack " + en.getName() +" via special ability and make "+combatStats[0]+"," +
+                            " but couldn't hurt him because " + en.getName() +"had " +combatStats[1] + " defence points! \n" ;
+            }
+        }
+        return output;
 
     }
 
-    public boolean specialAbility (List<Enemy> enemyList){
-        if (currentEnergy<cost)
-            return false;
-        else{
-            currentEnergy = currentEnergy -cost;
-            //foreach loop must be completed.
+
+    public String toString()    {
+        String Rouge=super.toString();
+        Rouge+="Type: Rouge, Current energy: "+currentEnergy +"     cost of special ability: "+cost +"\n";
+        return Rouge;
+
+    }
+
+    private List<Enemy> enemiesInRange(int range,List<Enemy> enemies)
+    {
+        List<Enemy> enemiesInRange=new LinkedList<Enemy>();
+
+        Point playerPosition=this.getPosition();
+        for (Enemy en: enemies) {
+            if ((en.getPosition().distance(playerPosition))<range)
+                enemiesInRange.add(en);
         }
-        return true;
+        return enemiesInRange;
     }
 }

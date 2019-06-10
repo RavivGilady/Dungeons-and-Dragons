@@ -44,27 +44,24 @@ public class Warrior extends Player {
     remaining--;
     }
 
-    public boolean specialAbility (List<Enemy> enemyList){
+    public String specialAbility (List<Enemy> enemyList) {
         if (remaining>0)
-            return false; //TODO - throw an error with a message??
+            return "Cannot cast ability, remaining ticks to enable ability is greater than 0";
         else{
+            int gained=Math.min( (getCurrentHealth() + (2 * getDefense())), getHealthPool());
             remaining = cooldown;
-            if(this.getHealthPool()>=(this.getCurrentHealth()+ 2*this.getDefense()))
-                this.setCurrentHealth(getHealthPool());
-            else
-                this.setCurrentHealth(this.getCurrentHealth() + 2*this.getDefense());
+           setCurrentHealth(getCurrentHealth()+gained);
+            return "Ability casted! "+gained+" health points gained!";
+
         }
-        return true;
+
     }
 
     public String toString()
     {
         String warrior=super.toString();
-        warrior+="Cooldwown"; //TODO finish and add in other Player Subclasses
+        warrior+="Type: Warrior, Cooldwown ticks: "+cooldown +"     remaining ticks to enable special ability: "+remaining +"\n";
         return warrior;
     }
-
-
-
 
 }

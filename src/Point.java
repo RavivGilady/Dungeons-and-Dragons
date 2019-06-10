@@ -42,6 +42,7 @@ public class Point {
     }
     public boolean equals(Object o)
     {
+        //must use instance of for equal function in order to implement the right way
         if (!(o instanceof Point))
             return false;
         Point p=(Point)o;
@@ -49,4 +50,10 @@ public class Point {
 
     }
 
+    public double distance(Point playerPosition) {
+        int x_es= this.x-playerPosition.x;
+        int y_es=this.y-playerPosition.y;
+        double sum=Math.pow((double)x_es,2) +Math.pow((double)y_es,2);
+        return (Math.sqrt(sum));
+    }
 }

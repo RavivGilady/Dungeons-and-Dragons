@@ -26,13 +26,25 @@ public abstract class GameUnit {
     {
         //TODO random
         int[] combatInfo=new int[2];
-        combatInfo[0]=0; //TODO change
-        combatInfo[1]=gu.defense(Attack);
+        combatInfo[0]=0; //AttackPoints //TODO change
+        combatInfo[1]=gu.defense(combatInfo[0]);
         return combatInfo;
     }
-    public int defense(int attactPoints)
-    {//TODO change to random defense Point
-        return 0;
+    public int[] attack(GameUnit gu,int attackPoints)
+    {
+            //TODO random
+        int[] combatInfo=new int[2];
+        combatInfo[0]=attackPoints; //TODO change
+        combatInfo[1]=gu.defense(attackPoints);
+        return combatInfo;
+    }
+    public int defense(int attackPoints)
+    {
+        int defencePoints=0; //TODO change to random between 0 to Defense
+        if(attackPoints>Defense)
+            CurrentHealth-= (attackPoints-defencePoints);
+        return defencePoints;
+
     }
     public  boolean isDead()
     {

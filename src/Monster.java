@@ -10,6 +10,7 @@ public class Monster extends Enemy{
 
     @Override
     public void gameTick() {
+        //TODO implement
 
     }
 }

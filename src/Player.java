@@ -51,14 +51,11 @@ public abstract class Player extends  GameUnit {
     }
     public String toString()
     {
-        String player="Player:"+getName()+" Stats:\n" +
-                "Health Pool:"+getHealthPool()+"\n" +
-                "Current Health: "+ getCurrentHealth()+"\n" +
-                "Attack points: " + getAttack() + "\n" +
-                "Defense Points: "+ getDefense() +"\n" +
-                "Experience: "+ experience + "\n"+
-                "Level: "+ level+"\n";
+        String player="Player:"+getName()+" Stats:      Health Pool:"+getHealthPool()+"     Current Health: "+ getCurrentHealth() +
+                "   Attack points: " + getAttack()  +   "  Defense Points: "+ getDefense() +"\n" +
+                "Experience: "+ experience +  "     Level: "+ level+"\n";
         return player;
     }
-    public abstract boolean specialAbility(List<Enemy> enemyList);
+    public abstract String specialAbility(List<Enemy> enemyList);
 }
+

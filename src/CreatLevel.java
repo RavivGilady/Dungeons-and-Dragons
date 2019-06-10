@@ -29,6 +29,7 @@ public class CreatLevel {
     }
 
     public List<Enemy> creatEnemyList() {
+
         List<Enemy> enemyList = new LinkedList<>();
         int counter = 0;
         while (sc.hasNextLine()) {
