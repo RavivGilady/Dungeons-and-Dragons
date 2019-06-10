@@ -29,7 +29,7 @@ public class Rogue extends Player {
             currentEnergy+=10;
     }
 
-    public String specialAbility (List<Enemy> enemyList){
+    public String specialAbility (List<Enemy>[] enemyList){
         String output="";
         if (currentEnergy<cost)
             output= "Cannot cast ability, current energy is smaller than cost";
@@ -66,15 +66,15 @@ public class Rogue extends Player {
 
     }
 
-    private List<Enemy> enemiesInRange(int range,List<Enemy> enemies)
+    private List<Enemy> enemiesInRange(int range,List<Enemy>[] enemiesLists)
     {
         List<Enemy> enemiesInRange=new LinkedList<Enemy>();
-
         Point playerPosition=this.getPosition();
-        for (Enemy en: enemies) {
-            if ((en.getPosition().distance(playerPosition))<range)
-                enemiesInRange.add(en);
-        }
+        for(List<Enemy> enemies : enemiesLists)
+            for (Enemy en: enemies) {
+                if ((en.getPosition().distance(playerPosition))<range)
+                    enemiesInRange.add(en);
+            }
         return enemiesInRange;
     }
 }

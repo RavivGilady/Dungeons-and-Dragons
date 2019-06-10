@@ -56,6 +56,6 @@ public abstract class Player extends  GameUnit {
                 "Experience: "+ experience +  "     Level: "+ level+"\n";
         return player;
     }
-    public abstract String specialAbility(List<Enemy> enemyList);
+    public abstract String specialAbility(List<Enemy>[] enemyLists);
 }
 

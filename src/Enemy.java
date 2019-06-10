@@ -13,5 +13,5 @@ public abstract class Enemy extends GameUnit {
     }
 
 
-
+    public abstract Point move();
 }

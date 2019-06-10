@@ -44,7 +44,7 @@ public class Warrior extends Player {
     remaining--;
     }
 
-    public String specialAbility (List<Enemy> enemyList) {
+    public String specialAbility (List<Enemy> enemyList[]) {
         if (remaining>0)
             return "Cannot cast ability, remaining ticks to enable ability is greater than 0";
         else{

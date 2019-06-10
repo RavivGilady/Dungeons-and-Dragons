@@ -56,4 +56,6 @@ public class Point {
         double sum=Math.pow((double)x_es,2) +Math.pow((double)y_es,2);
         return (Math.sqrt(sum));
     }
+
+
 }

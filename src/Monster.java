@@ -9,6 +9,11 @@ public class Monster extends Enemy{
     }
 
     @Override
+    public Point move() {
+       return this.getPosition();
+    }
+
+    @Override
     public void gameTick() {
         //TODO implement
 
