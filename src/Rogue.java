@@ -45,6 +45,7 @@ public class Rogue extends Player {
                     if (en.isDead())
                     {
                         addExp(en.getExperience());
+
                         output+=" And killed him! ";
                     }
                     else
