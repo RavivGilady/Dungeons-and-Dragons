@@ -6,13 +6,13 @@ import java.util.List;
 
 public class CreatLevel {
 
-    String path;
+    static String  path;
 
     public CreatLevel(String path) {
         this.path = path;
     }
 
-    private Scanner restartScanner(){
+    public static Scanner restartScanner(){
         Scanner sc = null;
         File file = new File(path);
         try {
@@ -125,8 +125,44 @@ public class CreatLevel {
 
     }
 
-    public List<Player> creatPlayerList (int i){
+    public static List<Player> creatPlayerList (int i){
         List<Player> PlayerList = new LinkedList<>();
+        Scanner sc = restartScanner();
+        int counter = 0;
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            for (int j = 0; j < line.length(); j = j + 1) {
+                if(line.charAt(j) == '@'){
+                    if(i==1){
+                        Warrior p = new Warrior ("Jon Snow",300,300,30,4,i,counter,0,1,6,0,'@');
+                        PlayerList.add(p);
+                    }
+                    if(i==2){
+                        Warrior p = new Warrior ("The Hound",400,400,20,6,i,counter,0,1,4,0,'@');
+                        PlayerList.add(p);
+                    }
+                    if(i==3){
+                        Mage p = new Mage ("Melisandre",160,160,10,1,i,counter,0,1,40,300,300,30,5,6,'@');
+                        PlayerList.add(p);
+                    }
+                    if(i==4){
+                        Mage p = new Mage ("Thoros of Myr",250,250,25,3,i,counter,0,1,15,150,150,50,3,3,'@');
+                        PlayerList.add(p);
+                    }
+                    if(i==5){
+                        Rogue p = new Rogue ("Arya Stark",150,150,40,2,i,counter,0,1,20,'@');
+                        PlayerList.add(p);
+                    }
+                    if(i==6){
+                        Rogue p = new Rogue ("Bronn",250,250,35,3,i,counter,0,1,60,'@');
+                        PlayerList.add(p);
+                    }
+
+                }
+
+            }
+            counter = counter +1;
+        }
         return PlayerList;
     }
 
