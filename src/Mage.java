@@ -62,6 +62,7 @@ public class Mage extends Player {
             String output=this.getName()+" attacked " + en.getName() +" via special ability and made him "
                     +(combatStats[0]-combatStats[1]) + "damage" ;
             if (en.isDead()) {
+                addExp(en.getExperience());
                 enemiesInRange.remove(en);
                 output+=" and killed him!";
             }

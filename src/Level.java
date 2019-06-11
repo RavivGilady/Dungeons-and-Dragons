@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class Level {
@@ -47,10 +48,15 @@ public class Level {
                 desiredPlayer.setPosition(playerMovementPoint);
     }
     private void removeDeadEnemies() {
-        for(List<Enemy> enemies : enemiesLists)
-            for (Enemy en : enemies)
-                if(en.isDead())
-                    enemies.remove(en);
+        for (int i = 0; i <enemiesLists.length; i++) {
+            for (int j = 0; j < enemiesLists[i].size(); j++) {
+                if (enemiesLists[i].get(j).isDead()) {
+                    enemiesLists[i].remove(j);
+                    j--;
+                }
+            }
+
+        }
     }
     public boolean checkWalls(Point playerMovementPoint){
         boolean canMove=true;
@@ -75,7 +81,7 @@ public class Level {
         int[] combatStats =attacker.attack(defender);
         if( combatStats[0]>combatStats[1])
         {
-            combatNotification+=attacker.getName()+" attacked " + defender.getName() +" and made him "+combatStats[0] + "damage! ";
+            combatNotification+=attacker.getName()+" attacked " + defender.getName() +" and made him "+combatStats[0] + " damage! ";
             if (defender.isDead())
             {
                 combatNotification+=" And killed him! ";
@@ -88,7 +94,7 @@ public class Level {
         }
         else
             combatNotification+=attacker.getName()+" tried to attack " + defender.getName() +"  and make "+combatStats[0]+"attack points," +
-                    " but couldn't hurt him because " + defender.getName() +"had " +combatStats[1] + " defence points! \n";
+                    " but couldn't hurt him because " + defender.getName() +" had " +combatStats[1] + " defence points! \n";
     }
     private void removeEnemy(Enemy defender) {
         if (enemiesLists[0].contains(defender))
@@ -183,7 +189,7 @@ public class Level {
         if( combatStats[0]>combatStats[1])
         {
             combatNotification+=attacker.getName()+" attacked " + defender.getName() +" and made him "
-                    +(combatStats[0]-combatStats[1]) + "damage! ";
+                    +(combatStats[0]-combatStats[1]) + " damage! ";
             if (defender.isDead())
             {
                 combatNotification+=" And killed him! ";
@@ -193,8 +199,8 @@ public class Level {
             combatNotification+="\n";
         }
         else
-            combatNotification+=attacker.getName()+" tried to attack " + defender.getName() +"  and make "+combatStats[0]+"attack points," +
-                    " but couldn't hurt him because " + defender.getName() +"had " +combatStats[1] + " defence points! \n";
+            combatNotification+=attacker.getName()+" tried to attack " + defender.getName() +"  and make "+combatStats[0]+" attack points," +
+                    " but couldn't hurt him because " + defender.getName() +" had " +combatStats[1] + " defence points! \n";
     }
 
     private void trapsMove(Point player1) {
