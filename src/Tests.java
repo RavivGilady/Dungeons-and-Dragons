@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Tests {
     static Level first;
-    public static void main(String[] args) {
+    public static void  main(String[] args) {
 
 
 
@@ -13,22 +13,27 @@ public class Tests {
         CreatLevel c=new CreatLevel(path);
         List<Enemy>[] enemiesList=c.creatEnemyList();
         List<Player> playerList=new LinkedList<>();
-        Player p=new Rogue("raviv",55,5,5,5,1,9,5,2,34,'@');
+        Player p=new Rogue("raviv",55,55,100,5,1,9,5,2,34,'@');
         playerList.add(p);
         List<Point> walls=c.creatWallsList();
         int width=c.width();
         int length=c.length();
         first=new Level(enemiesList,playerList,walls,width,length);
-        printBoard();
+        System.out.println(first.printBoard());
+        Scanner sc=new Scanner(System.in);
+        String g=sc.next();
+        while (g!="!!"){
+            printBoard(g.charAt(0));
+            g=sc.next();
+        }
 
     }
 
 
 
-    private static void printBoard()
+    private static void printBoard(char movement)
     {
-        System.out.println(first.printBoard());
-        first.playerMove(0,'d');
+        first.playerMove(0,movement);
         first.enemiesMove();
         first.gameTick();
         System.out.println(first.printBoard());

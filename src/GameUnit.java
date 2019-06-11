@@ -39,14 +39,14 @@ public abstract class GameUnit {
     public int defense(int attackPoints)
     {
         int defencePoints = randomGenerator.generateNumber(this.Defense);
-        if(attackPoints>Defense)
+        if(attackPoints>defencePoints)
             CurrentHealth-= (attackPoints-defencePoints);
         return defencePoints;
 
     }
     public  boolean isDead()
     {
-        return (CurrentHealth<=HealthPool);
+        return (CurrentHealth<=0);
     }
 
     public abstract void gameTick();
