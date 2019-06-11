@@ -125,5 +125,10 @@ public class CreatLevel {
 
     }
 
+    public List<Player> creatPlayerList (int i){
+        List<Player> PlayerList = new LinkedList<>();
+        return PlayerList;
+    }
+
 }
 
