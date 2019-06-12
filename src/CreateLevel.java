@@ -4,26 +4,62 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.List;
 
-public class CreatLevel {
+public class CreateLevel {
 
-    static String  path;
+    private String  path;
 
-    public CreatLevel(String path) {
+    public CreateLevel(String path) {
+
+        File tmpDir = new File(path);
+        boolean exists = tmpDir.exists();
+        if(!exists)
+            throw new IllegalArgumentException();
         this.path = path;
     }
 
-    public static Scanner restartScanner(){
-        Scanner sc = null;
-        File file = new File(path);
-        try {
-           sc = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return sc;
-    }
+    public List<Player> createPlayerList (int[] players){//TODO change in assignment 4 for multiple version
+        List<Player> PlayerList = new LinkedList<>();
+        Scanner sc = restartScanner();
+        int lineIndex=0;
+        int counter = 0;
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            for (int j = 0; j < line.length(); j = j + 1) {
+                if(line.charAt(j) == '@'){
+                    if(players[counter]==1){
+                        Warrior p = new Warrior ("Jon Snow",300,300,30,4,j,lineIndex,0,1,6,0,'@');
+                        PlayerList.add(p);
+                    }
+                    if(players[counter]==2){
+                        Warrior p = new Warrior ("The Hound",400,400,20,6,j,lineIndex,0,1,4,0,'@');
+                        PlayerList.add(p);
+                    }
+                    if(players[counter]==3){
+                        Mage p = new Mage ("Melisandre",160,160,10,1,j,lineIndex,0,1,40,300,300,30,5,6,'@');
+                        PlayerList.add(p);
+                    }
+                    if(players[counter]==4){
+                        Mage p = new Mage ("Thoros of Myr",250,250,25,3,j,lineIndex,0,1,15,150,150,50,3,3,'@');
+                        PlayerList.add(p);
+                    }
+                    if(players[counter]==5){
+                        Rogue p = new Rogue ("Arya Stark",150,150,40,2,j,lineIndex,0,1,20,'@');
+                        PlayerList.add(p);
+                    }
+                    if(players[counter]==6){
+                        Rogue p = new Rogue ("Bronn",250,250,35,3,j,lineIndex,0,1,60,'@');
+                        PlayerList.add(p);
+                    }
+                    counter = counter +1;
 
-    public List<Enemy>[] creatEnemyList() {
+                }
+
+            }
+            lineIndex++;
+        }
+        return PlayerList;
+    }
+    public List<Enemy>[] createEnemyList() {
 
         LinkedList[] enemyList = new LinkedList[2];
         enemyList[0]= new LinkedList<Monster>();
@@ -93,7 +129,7 @@ public class CreatLevel {
         }
         return enemyList;
     }
-    public List<Point> creatWallsList() {
+    public List<Point> createWallsList() {
         List<Point> wallsList = new LinkedList<>();
         Scanner sc = restartScanner();
         int counter = 0;
@@ -113,7 +149,7 @@ public class CreatLevel {
         Scanner sc = restartScanner();
         int counter = 0;
         while (sc.hasNextLine()) {
-            String line = sc.nextLine();
+            sc.nextLine();
             counter = counter + 1;
         }
         return counter;
@@ -124,46 +160,15 @@ public class CreatLevel {
         return line.length();
 
     }
-
-    public static List<Player> creatPlayerList (int i){
-        List<Player> PlayerList = new LinkedList<>();
-        Scanner sc = restartScanner();
-        int counter = 0;
-        while (sc.hasNextLine()) {
-            String line = sc.nextLine();
-            for (int j = 0; j < line.length(); j = j + 1) {
-                if(line.charAt(j) == '@'){
-                    if(i==1){
-                        Warrior p = new Warrior ("Jon Snow",300,300,30,4,i,counter,0,1,6,0,'@');
-                        PlayerList.add(p);
-                    }
-                    if(i==2){
-                        Warrior p = new Warrior ("The Hound",400,400,20,6,i,counter,0,1,4,0,'@');
-                        PlayerList.add(p);
-                    }
-                    if(i==3){
-                        Mage p = new Mage ("Melisandre",160,160,10,1,i,counter,0,1,40,300,300,30,5,6,'@');
-                        PlayerList.add(p);
-                    }
-                    if(i==4){
-                        Mage p = new Mage ("Thoros of Myr",250,250,25,3,i,counter,0,1,15,150,150,50,3,3,'@');
-                        PlayerList.add(p);
-                    }
-                    if(i==5){
-                        Rogue p = new Rogue ("Arya Stark",150,150,40,2,i,counter,0,1,20,'@');
-                        PlayerList.add(p);
-                    }
-                    if(i==6){
-                        Rogue p = new Rogue ("Bronn",250,250,35,3,i,counter,0,1,60,'@');
-                        PlayerList.add(p);
-                    }
-
-                }
-
-            }
-            counter = counter +1;
+    private  Scanner restartScanner(){
+        Scanner sc = null;
+        File file = new File(path);
+        try {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        return PlayerList;
+        return sc;
     }
 
 }

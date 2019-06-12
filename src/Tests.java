@@ -10,12 +10,12 @@ public class Tests {
 
 
         String path="level 1.txt";
-        CreatLevel c=new CreatLevel(path);
-        List<Enemy>[] enemiesList=c.creatEnemyList();
+        CreateLevel c=new CreateLevel(path);
+        List<Enemy>[] enemiesList=c.createEnemyList();
         List<Player> playerList=new LinkedList<>();
-        Player p=new Rogue("raviv",55,55,100,5,1,9,5,2,34,'@');
+        Player p=new Rogue("raviv",2000,2000,2000,100,1,9,5,1,2,'@');
         playerList.add(p);
-        List<Point> walls=c.creatWallsList();
+        List<Point> walls=c.createWallsList();
         int width=c.width();
         int length=c.length();
         first=new Level(enemiesList,playerList,walls,width,length);

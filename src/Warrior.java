@@ -41,17 +41,21 @@ public class Warrior extends Player {
     }
     @Override
     public void gameTick() {
-    remaining--;
+
+        if (remaining!=0)
+        remaining--;
     }
 
     public String specialAbility (List<Enemy> enemyList[]) {
         if (remaining>0)
-            return "Cannot cast ability, remaining ticks to enable ability is greater than 0";
+            return "Cannot cast ability, remaining ticks to enable ability is greater than 0\n";
         else{
             int gained=Math.min( (getCurrentHealth() + (2 * getDefense())), getHealthPool());
+            if (gained==getHealthPool())
+                gained=getHealthPool()-getCurrentHealth();
             remaining = cooldown;
            setCurrentHealth(getCurrentHealth()+gained);
-            return "Ability casted! "+gained+" health points gained!";
+            return "Ability casted! "+gained+" health points gained!\n";
 
         }
 
@@ -60,7 +64,7 @@ public class Warrior extends Player {
     public String toString()
     {
         String warrior=super.toString();
-        warrior+="Type: Warrior, Cooldwown ticks: "+cooldown +"     remaining ticks to enable special ability: "+remaining +"\n";
+        warrior+="Type: Warrior, Cooldown ticks: "+cooldown +"     remaining ticks to enable special ability: "+remaining +"\n";
         return warrior;
     }
 

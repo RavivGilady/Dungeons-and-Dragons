@@ -1,4 +1,4 @@
-import java.util.TooManyListenersException;
+import java.util.List;
 
 public class Trap extends Enemy {
 
@@ -33,7 +33,10 @@ public class Trap extends Enemy {
 
     @Override
     public void gameTick() {
-        tickCounts++;
+        if(tickCounts==respawn)
+            tickCounts=0;
+        else
+             tickCounts++;
         if(tickCounts<visibility)
             setTile(originalTile);
         else
@@ -42,8 +45,9 @@ public class Trap extends Enemy {
     @Override
     public Point move(Point player) {
         if (tickCounts==respawn){
-            tickCounts=0;
-            return null;//TODO move
+            List<Point> potentialPoint=getPosition().findPointsInRange(range);
+            int index=randomGenerator.generateNumber(potentialPoint.size());
+            return potentialPoint.get(index);
         }
         else
             return null; // if

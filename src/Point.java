@@ -1,3 +1,8 @@
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 public class Point {
     int x;
     int y;
@@ -10,6 +15,26 @@ public class Point {
     {
         this.x=p.getX();
         this.y=p.getY();
+    }
+    private Point (Point p,int movement) //0 - left, 1- right, 2 - up, 3 - down
+    {
+        if(movement==0) {
+            this.x = p.getX() - 1;
+            this.y = p.getY();
+        }
+        if(movement==1) {
+            this.x = p.getX() + 1;
+            this.y = p.getY();
+        }
+        if(movement==2) {
+            this.x = p.getX();
+            this.y = p.getY() + 1;
+        }
+        if(movement==3) {
+            this.x = p.getX() ;
+            this.y = p.getY() - 1;
+        }
+
     }
 
     public int getX() {
@@ -59,8 +84,9 @@ public class Point {
 
 
     public boolean outOfBounds(int length, int width) {
-        if (y>=length | x>=width)
+        if (y>=length | x>=width | y<0 | x<0)
             return true;
+
         return false;
     }
 
@@ -79,5 +105,34 @@ public class Point {
             else
                 moveDown();
         }
+    }
+
+    public List<Point> findPointsInRange(int range)
+    {
+     List<Point> output=new LinkedList<>(givePointsNear(range));
+     return output;
+
+    }
+
+    private Set<Point> givePointsNear(int range)
+    {
+        Set<Point> output = new LinkedHashSet<>();
+        output.add(this);
+        if (range != 0) {
+            Point left = new Point(this,0);
+            Point right = new Point(this,1);
+            Point up = new Point(this,2);
+            Point down = new Point(this,3);
+            output.add(left);
+            output.add(right);
+            output.add(up);
+            output.add(down);
+            output.addAll(left.givePointsNear(range - 1));
+            output.addAll(right.givePointsNear(range - 1));
+            output.addAll(up.givePointsNear(range - 1));
+            output.addAll(down.givePointsNear(range - 1));
+
+        }
+    return output;
     }
 }

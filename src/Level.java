@@ -8,6 +8,8 @@ public class Level {
     private int width;
     private int length;
     private String combatNotification ="";
+    private boolean isDone;
+    private boolean gameOver;
 
     public Level(List<Enemy>[] enemiesList, List<Player> playerList, List<Point> walls, int width, int length) {
         this.enemiesLists = enemiesList;
@@ -22,10 +24,14 @@ public class Level {
         for (Player pl : playerList) {
             if(!pl.isDead())
                 pl.gameTick();
+            else
+                gameOver=true;
         }
         for(List<Enemy> enemiesList: enemiesLists)
             for(Enemy en: enemiesList)
                 en.gameTick();
+            if (enemiesLists[0].isEmpty() & enemiesLists[1].isEmpty())
+                isDone=true;
 
     }
     public void playerMove(int playerPosition,char movement){
@@ -103,24 +109,36 @@ public class Level {
             enemiesLists[1].remove(defender);
     }
     public String printBoard() {
-        char[][] boardAsArray = new char[length][width];
-        for (int i = 0; i < length; i++)
-            for (int j = 0; j < width; j++)
-                boardAsArray[i][j] = '.';
-        for(List<Enemy> enemies:enemiesLists)
-            for(Enemy en : enemies)
-            {
-                boardAsArray[en.getYposition()][en.getXposition()]=en.getTile();
+        int deENEMY=0;
+        int dePL=0;
+        int deWALLS=0;
+
+        try {
+            char[][] boardAsArray = new char[length][width];
+            for (int i = 0; i < length; i++)
+                for (int j = 0; j < width; j++)
+                    boardAsArray[i][j] = '.';
+            for (List<Enemy> enemies : enemiesLists)
+                for (Enemy en : enemies) {
+                    deENEMY++;
+
+                    boardAsArray[en.getYposition()][en.getXposition()] = en.getTile();
+                }
+            for (Player pl : playerList) {
+                dePL++;
+
+                boardAsArray[pl.getYposition()][pl.getXposition()] = pl.getTile();
             }
-        for(Player pl : playerList)
-        {
-            boardAsArray[pl.getYposition()][pl.getXposition()]=pl.getTile();
+            for (Point p : walls) {
+                boardAsArray[p.getY()][p.getX()] = '#';
+                deWALLS++;
+            }
+            return arrayToBoard(boardAsArray);
         }
-        for(Point p : walls)
+        catch(Exception e)
         {
-            boardAsArray[p.getY()][p.getX()]='#';
+            return "DEBUG";
         }
-        return arrayToBoard(boardAsArray);
 
     }
     private String arrayToBoard(char[][] board){
@@ -168,13 +186,12 @@ public class Level {
         for(Enemy mon :enemiesLists[0])
         {
             Point desiredMovement =mon.move(player1);
-            if(checkWalls(desiredMovement))
+            if(checkWalls(desiredMovement) & moveEnemyChecker(mon,desiredMovement))
                 if(checkForPlayersAndAttack(desiredMovement,mon,0))
                     mon.setPosition(desiredMovement);
         }
     }
-    private boolean checkForPlayersAndAttack(Point position,Enemy en,int range)
-    {
+    private boolean checkForPlayersAndAttack(Point position,Enemy en,int range){
         Point enemyMovementPoint=position;
         for (Player P : playerList)
             if(!P.isDead() & enemyMovementPoint.distance(P.getPosition())<=range) {
@@ -203,6 +220,15 @@ public class Level {
                     " but couldn't hurt him because " + defender.getName() +" had " +combatStats[1] + " defence points! \n";
     }
 
+    private boolean moveEnemyChecker(Enemy toMove,Point desireAction)
+    {
+        for(List<Enemy> enemies : enemiesLists)
+            for (Enemy en : enemies)
+                if(toMove!=en && (desireAction.equals(en.getPosition()))) {
+                    return false;
+                }
+        return true;
+    }
     private void trapsMove(Point player1) {
         for(Enemy trap : enemiesLists[1])        {
             Point desiredMovement=trap.move(player1);
@@ -226,7 +252,22 @@ public class Level {
                 if (en.getPosition().equals(move))
                     return false;
         }
+        for (Point wall:walls) {
+            if (wall.equals(move))
+                return false;
+        }
         return true;
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public List<Player> getPlayers() {
+        return playerList;
+    }
 }
