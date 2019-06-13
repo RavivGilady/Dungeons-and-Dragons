@@ -79,7 +79,8 @@ public class Point {
         int x_es= this.x-playerPosition.x;
         int y_es=this.y-playerPosition.y;
         double sum=Math.pow((double)x_es,2) +Math.pow((double)y_es,2);
-        return (Math.sqrt(sum));
+        double output=Math.sqrt(sum);
+        return (output);
     }
 
 
