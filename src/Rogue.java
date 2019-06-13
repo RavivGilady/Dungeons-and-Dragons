@@ -32,7 +32,7 @@ public class Rogue extends Player {
     public String specialAbility (List<Enemy>[] enemyList){
         String output="";
         if (currentEnergy<cost)
-            output= "Cannot cast ability, current energy is smaller than cost";
+            output= "Cannot cast ability, current energy is smaller than cost\n";
         else{
             currentEnergy = currentEnergy -cost;
             List<Enemy> enemiesInRange=enemiesInRange(2,enemyList);
@@ -41,7 +41,7 @@ public class Rogue extends Player {
                 if( combatStats[0]>combatStats[1])
                 {
                     output+=this.getName()+" attacked " + en.getName() +" via special ability and made him "
-                            +(combatStats[0]-combatStats[1]) + "damage!" ;
+                            +(combatStats[0]-combatStats[1]) + " damage!" ;
                     if (en.isDead())
                     {
                         addExp(en.getExperience());

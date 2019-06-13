@@ -5,8 +5,7 @@ public abstract class GameUnit {
     private int CurrentHealth;
     private int Attack;
     private int Defense;
-    private int Xposition;
-    private int Yposition;
+
     private char tile;
     private Point position;
 
@@ -17,8 +16,6 @@ public abstract class GameUnit {
         this.CurrentHealth = CurrentHealth;
         this.Attack = Attack;
         this.Defense = Defense;
-        this.Xposition = Xposition;
-        this.Yposition = Yposition;
         this.tile=Tile;
         this.position=new Point(Xposition,Yposition);
     }
@@ -90,16 +87,8 @@ public abstract class GameUnit {
         return position.x;
     }
 
-    public void setXposition(int xpositin) {
-        Xposition = xpositin;
-    }
-
     public int getYposition() {
         return position.y;
-    }
-
-    public void setYposition(int yposition) {
-        Yposition = yposition;
     }
 
     public char getTile() {

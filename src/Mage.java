@@ -37,7 +37,7 @@ public class Mage extends Player {
     public String  specialAbility (List<Enemy>[] enemyList) {
         String output="";
         if (currentMana<cost)
-            output = "Cannot cast ability, current mana is smaller than cost";
+            output = "Cannot cast ability, current mana is smaller than cost\n";
 
         else {
             currentMana = currentMana - cost;
@@ -60,7 +60,7 @@ public class Mage extends Player {
         if( combatStats[0]>combatStats[1])
         {
             String output=this.getName()+" attacked " + en.getName() +" via special ability and made him "
-                    +(combatStats[0]-combatStats[1]) + "damage" ;
+                    +(combatStats[0]-combatStats[1]) + " damage" ;
             if (en.isDead()) {
                 addExp(en.getExperience());
                 enemiesInRange.remove(en);
@@ -79,7 +79,7 @@ public class Mage extends Player {
     public String toString()
     {
         String mage=super.toString();
-        mage+="Type: Mage, Spell Power: "+spellPower +"     mana pool: "+manaPool + "    cost of special ability: "  + cost + "\n"+
+        mage+="Type: Mage, Spell Power: "+spellPower +"     current mana: "+currentMana +"     mana pool: "+manaPool + "    cost of special ability: "  + cost + "\n"+
             "     hit times: " + hitTimes+ "    range: " +range + "\n";
         return mage;
     }
