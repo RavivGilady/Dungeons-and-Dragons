@@ -1,3 +1,5 @@
+package game;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
@@ -29,27 +31,27 @@ public class CreateLevel {
             for (int j = 0; j < line.length(); j = j + 1) {
                 if(line.charAt(j) == '@'){
                     if(players[counter]==1){
-                        Warrior p = new Warrior ("Jon Snow",300,300,30,4,j,lineIndex,0,1,6,0,'@');
+                        Warrior p = new Warrior("Jon Snow",300,300,30,4,j,lineIndex,0,1,6,0,'@');
                         PlayerList.add(p);
                     }
                     if(players[counter]==2){
-                        Warrior p = new Warrior ("The Hound",400,400,20,6,j,lineIndex,0,1,4,0,'@');
+                        Warrior p = new Warrior("The Hound",400,400,20,6,j,lineIndex,0,1,4,0,'@');
                         PlayerList.add(p);
                     }
                     if(players[counter]==3){
-                        Mage p = new Mage ("Melisandre",160,160,10,1,j,lineIndex,0,1,40,300,300,30,5,6,'@');
+                        Mage p = new Mage("Melisandre",160,160,10,1,j,lineIndex,0,1,40,300,300,30,5,6,'@');
                         PlayerList.add(p);
                     }
                     if(players[counter]==4){
-                        Mage p = new Mage ("Thoros of Myr",250,250,25,3,j,lineIndex,0,1,15,150,150,50,3,3,'@');
+                        Mage p = new Mage("Thoros of Myr",250,250,25,3,j,lineIndex,0,1,15,150,150,50,3,3,'@');
                         PlayerList.add(p);
                     }
                     if(players[counter]==5){
-                        Rogue p = new Rogue ("Arya Stark",150,150,40,2,j,lineIndex,0,1,20,'@');
+                        Rogue p = new Rogue("Arya Stark",150,150,40,2,j,lineIndex,0,1,20,'@');
                         PlayerList.add(p);
                     }
                     if(players[counter]==6){
-                        Rogue p = new Rogue ("Bronn",250,250,35,3,j,lineIndex,0,1,60,'@');
+                        Rogue p = new Rogue("Bronn",250,250,35,3,j,lineIndex,0,1,60,'@');
                         PlayerList.add(p);
                     }
                     counter = counter +1;

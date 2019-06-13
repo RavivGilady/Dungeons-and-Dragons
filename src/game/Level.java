@@ -1,4 +1,7 @@
-import java.util.LinkedList;
+package game;
+
+import game.Point;
+
 import java.util.List;
 
 public class Level {

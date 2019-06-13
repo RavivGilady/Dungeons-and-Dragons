@@ -1,3 +1,7 @@
+package game;
+
+import game.Point;
+
 import java.util.LinkedList;
 import java.util.List;
 

@@ -1,3 +1,7 @@
+package game;
+
+import game.Controller;
+
 import java.util.Scanner;
 
 public class Presentation {

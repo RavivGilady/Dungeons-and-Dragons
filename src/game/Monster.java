@@ -1,4 +1,6 @@
-import java.util.Random;
+package game;
+
+import game.Point;
 
 public class Monster extends Enemy{
 

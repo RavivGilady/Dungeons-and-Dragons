@@ -1,3 +1,5 @@
+package game;
+
 public abstract class GameUnit {
 
     private  String name;
@@ -22,7 +24,7 @@ public abstract class GameUnit {
     public int[] attack(GameUnit gu)
     {
         int[] combatInfo=new int[2];
-        combatInfo[0]=randomGenerator.generateNumber(this.Attack);
+        combatInfo[0]= randomGenerator.generateNumber(this.Attack);
         combatInfo[1]=gu.defense(combatInfo[0]);
         return combatInfo;
     }

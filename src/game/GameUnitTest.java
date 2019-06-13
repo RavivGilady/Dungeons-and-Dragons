@@ -1,9 +1,10 @@
+package game;
+
+import game.GameUnit;
 import TestsPackage.ProjectTests;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class GameUnitTest extends ProjectTests {
 

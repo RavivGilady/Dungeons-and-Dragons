@@ -1,3 +1,8 @@
+package game;
+
+import game.GameUnit;
+import game.Point;
+
 public abstract class Enemy extends GameUnit {
 
     private int experience;

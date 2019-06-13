@@ -1,6 +1,10 @@
+package game;
+
+import game.GameUnit;
+
 import java.util.List;
 
-public abstract class Player extends  GameUnit {
+public abstract class Player extends GameUnit {
 
     private int experience;
     private int level;

@@ -1,9 +1,8 @@
 package TestsPackage;
-import GameUnit;
+import game.GameUnit;
 import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
+import game.*;
 public class GameUnitTest extends ProjectTests {
 
     @Test

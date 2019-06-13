@@ -1,3 +1,7 @@
+package game;
+
+import game.Point;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,7 +73,7 @@ public class Rogue extends Player {
 
     }
 
-    private List<Enemy> enemiesInRange(int range,List<Enemy>[] enemiesLists)
+    private List<Enemy> enemiesInRange(int range, List<Enemy>[] enemiesLists)
     {
         List<Enemy> enemiesInRange=new LinkedList<Enemy>();
         Point playerPosition=this.getPosition();
