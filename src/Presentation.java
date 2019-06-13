@@ -2,22 +2,56 @@ import java.util.Scanner;
 
 public class Presentation {
     public static void main(String[] args) {
+        if (args.length==2 && args[1].equals("-D"))
+            startDetMode(args[0]);
+        else {
+            System.out.println("Welcome to Dungeon and Dragons");
+            int[] playerChooses = new int[1];
+            for (int i = 0; i < playerChooses.length; i++) {
+                playerChooses[i] = choosePlayer();
+                System.out.println("Use w/s/a/d to move");
+                System.out.println("Use e for special ability or q to pass.");
+            }
+
+            startGame(playerChooses, args[0]);
+        }
+    }
+
+    private static void startDetMode(String path) {
+        randomGenerator.randomGenerator("random_numbers.txt","user_actions.txt");
         System.out.println("Welcome to Dungeon and Dragons");
         int[] playerChooses = new int[1];
         for (int i = 0; i < playerChooses.length; i++) {
-            playerChooses[i] = choosePlayer();
-        System.out.println("Use w/s/a/d to move");
-        System.out.println("Use e for special ability or q to pass.");
+            playerChooses[i] = Integer.parseInt(randomGenerator.generateAction());
+            System.out.println("Use w/s/a/d to move");
+            System.out.println("Use e for special ability or q to pass.");
         }
-        startGame(playerChooses,args[0]);
+        startGameDetMode(playerChooses,path);
 
     }
+
+    private static void startGameDetMode(int[] playerChooses, String path) {
+        int counter=0;
+        Controller controller=new Controller(path,playerChooses);
+        System.out.println(controller.printBoard());
+        while (!controller.stop() & randomGenerator.notFinished())
+        {
+            counter++;
+            if (counter==6)
+                System.out.println("DEBUG");
+            String move=randomGenerator.generateAction();
+            if(move!=null && move.length()==1)
+                System.out.println(controller.runGame(move.charAt(0))) ;
+            System.out.println(counter);
+        }
+    }
+
 
     private static void startGame(int[] playerChooses,String path) {
         Scanner scanner=new Scanner(System.in);
         Controller controller=new Controller(path,playerChooses);
         System.out.println(controller.printBoard());
-        while (!controller.stop)
+        while (!controller.stop())
         {
             String move=scanner.nextLine();
             if(move!=null && move.length()==1)

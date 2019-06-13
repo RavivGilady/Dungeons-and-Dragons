@@ -3,16 +3,16 @@ import java.util.List;
 
 public class Controller {
     private Level currentLevel;
-    int i;
-    boolean stop;
-    CreateLevel cl;
+    private int i;
+    private boolean stop;
+    private CreateLevel cl;
     private String path;
+    randomGenerator rg;
 
-    private boolean firsTime;
     public Controller (String directoryPath ,int[] playersChoose) {
         path=directoryPath;
         i=1;
-        cl= new CreateLevel(directoryPath + " "+ i +".txt");
+        cl= new CreateLevel(directoryPath + "\\level "+ i +".txt");
         List<Player> players=cl.createPlayerList(playersChoose);
         List<Enemy>[] enemiesList=cl.createEnemyList();
         List<Point> walls=cl.createWallsList();
@@ -39,11 +39,12 @@ public class Controller {
             }
             else if (currentLevel.isDone()) {
                 List<Player> players=currentLevel.getPlayers();
-                output += "Level " + i + "Cleared!";
+                output += "Level " + i + " Cleared! \n";
+                i++;
                 if(NextLevel(players))
-                    output += "Good luck on level " + i ;
+                    output += "Good luck on level " + i + "\n";
                 else
-                    output += "!*!*!*!*!* GAME FINISHED *!*!*!*!" ;
+                    output += "!*!*!*!*!*!*!*!*!*!*!*!*!*!*!* GAME FINISHED *!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!" ;
 
             }
             return output;

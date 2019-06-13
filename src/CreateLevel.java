@@ -12,8 +12,10 @@ public class CreateLevel {
 
         File tmpDir = new File(path);
         boolean exists = tmpDir.exists();
-        if(!exists)
+        if(!exists) {
+            System.out.println(path);
             throw new IllegalArgumentException();
+        }
         this.path = path;
     }
 

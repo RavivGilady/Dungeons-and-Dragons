@@ -18,15 +18,15 @@ public class Monster extends Enemy{
         }
         else {
             int movementValue = randomGenerator.generateNumber(500);
-            if (movementValue %5 == 0)
+            //if %5==0 do nothing - output=output
+            if (movementValue %5 == 1)
                 output.moveLeft();
-            if (movementValue % 5 == 1)
-                output.moveUp();
             if (movementValue % 5 == 2)
-                output.moveRight();
+                output.moveUp();
             if (movementValue % 5 == 3)
+                output.moveRight();
+            if (movementValue % 5 == 4)
                 output.moveDown();
-            //if %5==4 do nothing - output=output
         }
         return output;
     }

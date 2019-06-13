@@ -10,7 +10,7 @@ public class randomGenerator {
     private static Random generator=new Random();
 
 
-    public randomGenerator (String numbers, String actions){
+    public static void randomGenerator (String numbers, String actions){
         File numberFile = new File(numbers);
         try {
             number = new Scanner(numberFile);
@@ -19,7 +19,7 @@ public class randomGenerator {
         }
         File actionFile = new File(actions);
         try {
-            number = new Scanner(actionFile);
+            action = new Scanner(actionFile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -42,23 +42,15 @@ public class randomGenerator {
 
     public static String generateAction (){
         if(deter){
-            if(action.hasNext())
-               return action.nextLine();
-        }
-        return "no more lines in the file";
+        if(action.hasNext())
+            return action.nextLine();
     }
+        return "no more lines in the file";
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
+    public static boolean notFinished() {
+        return (action.hasNext() & number.hasNext());
+    }
 }
 
