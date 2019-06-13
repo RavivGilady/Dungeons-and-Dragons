@@ -50,9 +50,15 @@ public class Warrior extends Player {
         if (remaining>0)
             return "Cannot cast ability, remaining ticks to enable ability is greater than 0\n";
         else{
-            int gained=Math.min( (getCurrentHealth() + (2 * getDefense())), getHealthPool());
-            if (gained==getHealthPool())
+            int gained;
+            int min=Math.min( (getCurrentHealth() + (2 * getDefense())), getHealthPool());
+            if (min==getHealthPool())
+            {
                 gained=getHealthPool()-getCurrentHealth();
+            }
+            else{
+                gained=2*getDefense();
+            }
             remaining = cooldown;
            setCurrentHealth(getCurrentHealth()+gained);
             return "Ability casted! "+gained+" health points gained!\n";
