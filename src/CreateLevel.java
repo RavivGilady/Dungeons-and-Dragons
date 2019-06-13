@@ -171,5 +171,21 @@ public class CreateLevel {
         return sc;
     }
 
+
+    public void fixPlayerPosition(List<Player> players) {
+        Scanner sc = restartScanner();
+        int lineIndex = 0;
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            for (int j = 0; j < line.length(); j = j + 1) {
+                if (line.charAt(j) == '@') {
+                    Point newPoint = new Point(j, lineIndex);
+                    players.get(0).setPosition(newPoint);
+
+                }
+            }
+            lineIndex++;
+        }
+    }
 }
 

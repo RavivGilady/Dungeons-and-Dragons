@@ -21,7 +21,7 @@ public class Presentation {
         {
             String move=scanner.nextLine();
             if(move!=null && move.length()==1)
-                 System.out.println(controller.runGame(move.charAt(0)));
+                 System.out.println(controller.runGame(move.charAt(0))) ;
         }
 
     }

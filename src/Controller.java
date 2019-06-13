@@ -55,6 +55,7 @@ public class Controller {
             cl = new CreateLevel(path + " " + i + ".txt");
             List<Enemy>[] enemiesList=cl.createEnemyList();
             List<Point> walls=cl.createWallsList();
+            cl.fixPlayerPosition(players);
             int width=cl.width();
             int length=cl.length();
             currentLevel=new Level(enemiesList,players,walls,width,length);
