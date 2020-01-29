@@ -35,18 +35,14 @@ public class Presentation {
     }
 
     private static void startGameDetMode(int[] playerChooses, String path) {
-        int counter=0;
         Controller controller=new Controller(path,playerChooses);
         System.out.println(controller.printBoard());
         while (!controller.stop() & randomGenerator.notFinished())
         {
-            counter++;
-            if (counter==6)
-                System.out.println("DEBUG");
+
             String move=randomGenerator.generateAction();
             if(move!=null && move.length()==1)
                 System.out.println(controller.runGame(move.charAt(0))) ;
-            System.out.println(counter);
         }
     }
 
